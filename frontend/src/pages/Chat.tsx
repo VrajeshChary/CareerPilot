@@ -13,7 +13,7 @@ export default function Chat() {
     { role: "assistant", content: "Hi! I'm CareerPilot AI. Ask me anything about your resume, missing skills, or interview prep!" }
   ]);
   const [query, setQuery] = useState("");
-  const [llmProvider, setLlmProvider] = useState("openai");
+  const [llmProvider, setLlmProvider] = useState("openrouter");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -50,10 +50,8 @@ export default function Chat() {
               <SelectValue placeholder="Select LLM" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="openai">OpenAI (GPT-4o)</SelectItem>
-              <SelectItem value="anthropic">Anthropic (Claude)</SelectItem>
+              <SelectItem value="openrouter">Nemotron (OpenRouter)</SelectItem>
               <SelectItem value="gemini">Google (Gemini 1.5)</SelectItem>
-              <SelectItem value="groq">Groq (Llama 3)</SelectItem>
             </SelectContent>
           </Select>
         </div>

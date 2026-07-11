@@ -10,10 +10,8 @@ class Settings(BaseSettings):
     CHROMA_DB_DIR: str = "./chroma_db"
     
     # LLM API Keys
-    OPENAI_API_KEY: str = ""
-    ANTHROPIC_API_KEY: str = ""
     GEMINI_API_KEY: str = ""
-    GROQ_API_KEY: str = ""
+    OPENROUTER_API_KEY: str = ""
     
     class Config:
         env_file = ".env"

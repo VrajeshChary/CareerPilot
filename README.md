@@ -36,10 +36,8 @@ graph TD
 ### Environment Setup
 Create a `.env` file in the `backend/` directory:
 ```env
-OPENAI_API_KEY=your_openai_key
-ANTHROPIC_API_KEY=your_anthropic_key
+OPENROUTER_API_KEY=your_openrouter_key
 GEMINI_API_KEY=your_gemini_key
-GROQ_API_KEY=your_groq_key
 SECRET_KEY=supersecretkey_change_in_production
 DATABASE_URL=sqlite:///./sql_app.db
 CHROMA_DB_DIR=./chroma_db

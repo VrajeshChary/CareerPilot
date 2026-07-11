@@ -25,7 +25,11 @@ async def get_parsed_resume(
     if not resume:
         raise HTTPException(status_code=404, detail="Resume not found")
         
-    llm = ChatOpenAI(api_key=settings.OPENAI_API_KEY, model="gpt-4o-mini")
+    llm = ChatOpenAI(
+        api_key=settings.OPENROUTER_API_KEY, 
+        base_url="https://openrouter.ai/api/v1",
+        model="nvidia/nemotron-3-ultra-550b-a55b:free"
+    )
     prompt = PromptTemplate.from_template(
         "You are an expert resume parser. Extract the following from the resume text: Experience, Projects, Education, Skills, Certifications, Achievements, Links, Emails, Phone. Structure it in a neat JSON format.\n\nResume Text:\n{text}"
     )
@@ -45,7 +49,11 @@ async def get_resume_score(
     if not resume:
         raise HTTPException(status_code=404, detail="Resume not found")
         
-    llm = ChatOpenAI(api_key=settings.OPENAI_API_KEY, model="gpt-4o-mini")
+    llm = ChatOpenAI(
+        api_key=settings.OPENROUTER_API_KEY, 
+        base_url="https://openrouter.ai/api/v1",
+        model="nvidia/nemotron-3-ultra-550b-a55b:free"
+    )
     prompt = PromptTemplate.from_template(
         "You are an expert ATS system and recruiter. Analyze the following resume text and score it out of 100 based on ATS readability, technical skills, leadership, achievements, and impact. Provide the response as JSON containing: ATS_score, Readability, Projects, Technical_Skills, Leadership, Achievements, Formatting, Impact, Grammar, Overall_score. \n\nResume Text:\n{text}"
     )
@@ -66,7 +74,11 @@ async def match_job(
     if not resume:
         raise HTTPException(status_code=404, detail="Resume not found")
         
-    llm = ChatOpenAI(api_key=settings.OPENAI_API_KEY, model="gpt-4o-mini")
+    llm = ChatOpenAI(
+        api_key=settings.OPENROUTER_API_KEY, 
+        base_url="https://openrouter.ai/api/v1",
+        model="nvidia/nemotron-3-ultra-550b-a55b:free"
+    )
     prompt = PromptTemplate.from_template(
         "Compare the following job description with the provided resume text. Calculate Match %, Missing Skills, Strengths, Weaknesses, and Recommendations. Provide response in JSON format. \n\nJob Description:\n{job}\n\nResume:\n{resume}"
     )
@@ -90,7 +102,11 @@ async def generate_cover_letter(
     if not resume:
         raise HTTPException(status_code=404, detail="Resume not found")
         
-    llm = ChatOpenAI(api_key=settings.OPENAI_API_KEY, model="gpt-4o-mini")
+    llm = ChatOpenAI(
+        api_key=settings.OPENROUTER_API_KEY, 
+        base_url="https://openrouter.ai/api/v1",
+        model="nvidia/nemotron-3-ultra-550b-a55b:free"
+    )
     prompt = PromptTemplate.from_template(
         "You are an expert career coach. Based on the following resume, write a highly professional, tailored cover letter for this context/job: {context}. \n\nResume:\n{resume}"
     )
@@ -110,7 +126,11 @@ async def generate_interview_prep(
     if not resume:
         raise HTTPException(status_code=404, detail="Resume not found")
         
-    llm = ChatOpenAI(api_key=settings.OPENAI_API_KEY, model="gpt-4o-mini")
+    llm = ChatOpenAI(
+        api_key=settings.OPENROUTER_API_KEY, 
+        base_url="https://openrouter.ai/api/v1",
+        model="nvidia/nemotron-3-ultra-550b-a55b:free"
+    )
     prompt = PromptTemplate.from_template(
         "You are an expert technical interviewer. Based on the following resume and this context/job: {context}, generate 5 highly tailored technical questions, 3 behavioral questions, and 2 system design questions the candidate is likely to face. Provide detailed answers/tips for how the candidate should answer them.\n\nResume:\n{resume}"
     )

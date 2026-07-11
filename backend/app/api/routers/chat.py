@@ -5,9 +5,7 @@ from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
-from langchain_anthropic import ChatAnthropic
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_groq import ChatGroq
 from app.api import deps
 from app.models.user import User
 from app.rag.engine import get_vectorstore
@@ -17,20 +15,18 @@ router = APIRouter()
 
 class ChatRequest(BaseModel):
     query: str
-    llm_provider: str = "openai"  # openai, anthropic, gemini, groq
+    llm_provider: str = "openrouter"  # openrouter, gemini
 
 def get_llm(provider: str):
-    if provider == "openai":
-        return ChatOpenAI(api_key=settings.OPENAI_API_KEY, model="gpt-4o-mini")
-    elif provider == "anthropic":
-        return ChatAnthropic(api_key=settings.ANTHROPIC_API_KEY, model="claude-3-haiku-20240307")
-    elif provider == "gemini":
+    if provider == "gemini":
         return ChatGoogleGenerativeAI(google_api_key=settings.GEMINI_API_KEY, model="gemini-1.5-pro")
-    elif provider == "groq":
-        return ChatGroq(api_key=settings.GROQ_API_KEY, model_name="llama3-8b-8192")
     else:
-        # Default to OpenAI
-        return ChatOpenAI(api_key=settings.OPENAI_API_KEY, model="gpt-3.5-turbo")
+        # Default to OpenRouter Nemotron
+        return ChatOpenAI(
+            api_key=settings.OPENROUTER_API_KEY, 
+            base_url="https://openrouter.ai/api/v1",
+            model="nvidia/nemotron-3-ultra-550b-a55b:free"
+        )
 
 @router.post("/")
 async def chat_with_resume(
