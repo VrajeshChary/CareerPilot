@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import api from "@/services/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,7 +45,7 @@ export default function Chat() {
         </Button>
         <div className="flex items-center gap-3">
           <span className="text-sm font-medium">AI Model:</span>
-          <Select value={llmProvider} onValueChange={setLlmProvider}>
+          <Select value={llmProvider} onValueChange={(val) => setLlmProvider(val || "")}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Select LLM" />
             </SelectTrigger>
