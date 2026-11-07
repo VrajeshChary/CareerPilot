@@ -1,61 +1,98 @@
 # CareerPilot AI 🚀
 
-An elite, production-ready AI Resume Analysis and Career Assistant platform. CareerPilot AI deeply analyzes resumes, scores them against ATS standards, and features a multi-LLM Retrieval-Augmented Generation (RAG) chat interface to act as your personal career coach.
+An executive, production-ready AI Resume Intelligence and Career Acceleration Platform. CareerPilot AI evaluates resumes against applicant tracking systems (ATS), calculates keyword gaps against target job descriptions, provides interactive Before & After bullet point rewrites, and features a multi-LLM Retrieval-Augmented Generation (RAG) career coach grounded strictly in your verified documents.
 
-## Features
-- **Document Parsing**: Upload PDF, DOCX, and TXT resumes.
-- **RAG Engine**: Powered by LangChain, ChromaDB, and Sentence Transformers for precise contextual retrieval.
-- **AI Career Coach**: Interactive chat interface with streaming responses, markdown support, and context memory.
-- **Multi-LLM Support**: Seamlessly switch between OpenAI (GPT-4o), Anthropic (Claude 3), Google (Gemini 1.5), and Groq (Llama 3).
-- **Resume Scoring**: Generates detailed ATS, readability, and technical skill scores presented on beautiful radar and bar charts (via Recharts).
-- **Security**: JWT Authentication and protected API routes.
+---
 
-## Architecture Diagram
-```mermaid
-graph TD
-    User([User]) -->|Uploads Resume| Frontend(React + Vite)
-    Frontend -->|POST /api/v1/resume/upload| Backend(FastAPI)
-    Backend -->|Extract Text| DocumentService
-    DocumentService -->|Split Text & Embed| LangChain(RAG Engine)
-    LangChain -->|Store Vectors| VectorStore[(ChromaDB)]
-    Frontend -->|Queries| Backend
-    Backend -->|RetrievalQA| LangChain
-    LangChain -->|Retrieve Top-K| VectorStore
-    LangChain -->|Generate Answer| LLM[OpenAI / Anthropic / Gemini / Groq]
-    Backend -->|Response| Frontend
-```
+## ⚡ Core Architecture & Features
 
-## Tech Stack
-- **Frontend**: React 18, TypeScript, TailwindCSS, Shadcn UI, Recharts, Framer Motion, Axios.
-- **Backend**: FastAPI, SQLAlchemy, Pydantic, Passlib, JWT.
-- **AI/ML**: LangChain, ChromaDB, Sentence-Transformers, PyMuPDF.
-- **Infrastructure**: Docker & Docker Compose.
+- **Document Ingestion & Multi-Format Parsing**:
+  - High-performance extraction for **PDF** (`pymupdf`), **DOCX** (`python-docx`), **TXT**, and Markdown.
+  - Automated normalization, null byte stripping, and paragraph-preserving text cleaning.
+- **Native Semantic Vector RAG Engine**:
+  - Powered by native **ChromaDB** with persistent collections partitioned by user and document ID.
+  - Sentence-level chunking with boundary overlap for high semantic recall.
+  - Sub-millisecond vector similarity querying without external orchestration bloat.
+- **Deterministic & LLM-Powered ATS Audit**:
+  - **Overall ATS Score (0-100)**: Evaluates quantifiable business metrics, action verb density, structural hierarchy, and readability.
+  - **5-Pillar Competency Radar**: Benchmarked against top 5% industry standards (ATS Compatibility, Readability, Tech Stack, Action Verbs, Quantified Impact).
+  - **Impact Bullet Rewriter**: Interactive side-by-side cards comparing weak duties with quantified, metric-driven accomplishments (e.g. Google XYZ formula).
+- **Target Job Description Semantic Matcher**:
+  - Paste any target job description. Computes keyword overlap, categorized matched vs. missing skills, and tailored resume optimization roadmaps.
+- **Multi-LLM Inference with Smart Fallback**:
+  - Native integration with **Google Gemini** (`gemini-2.5-flash`), **OpenRouter** (`meta-llama/llama-3.3-70b-instruct`), **OpenAI** (`gpt-4o-mini`), and **Groq**.
+  - Built-in **Deterministic Neural Analyzer Fallback**: Runs 100% offline out-of-the-box even if no external API keys are configured.
+- **Executive Career Toolkit**:
+  - **Tailored Cover Letter Generator**: Custom tone selector (Executive, Confident, Startup, Collaborative) with 1-click clipboard copy.
+  - **Mock Interview Simulator**: Tailored Technical deep-dives, Behavioral questions (STAR methodology), and System Design scenarios.
+- **Modern "Zero-Slop" UI / UX**:
+  - Built with React 19, Vite, TailwindCSS, and Shadcn UI components.
+  - Slate and zinc dark/light palette with high contrast and legible typography.
+  - Active resume switcher, preview raw text modal, and responsive mobile-first layout.
 
-## Installation & Deployment
+---
 
-### Environment Setup
-Create a `.env` file in the `backend/` directory:
-```env
-OPENROUTER_API_KEY=your_openrouter_key
-GEMINI_API_KEY=your_gemini_key
-SECRET_KEY=supersecretkey_change_in_production
-DATABASE_URL=sqlite:///./sql_app.db
-CHROMA_DB_DIR=./chroma_db
-```
+## 🛠 Tech Stack
 
-### Run with Docker (Recommended)
-You can launch the entire application stack using Docker Compose:
+- **Frontend**: React 19, TypeScript, TailwindCSS v4, Recharts, React Markdown, Lucide Icons, Sonner Toaster, Axios.
+- **Backend**: FastAPI, SQLAlchemy, Pydantic v2, PyMuPDF, Python-Docx, PyJWT, Bcrypt.
+- **AI & Vectors**: ChromaDB (Local Persistent Client), Google GenAI SDK, OpenAI SDK.
+- **Containerization**: Docker, Docker Compose.
+
+---
+
+## 🚀 Quickstart & Local Setup
+
+### 1. Backend Setup
+
 ```bash
-docker-compose up --build
+cd backend
+
+# (Optional) Create and activate virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start backend server
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
-- Frontend will be available at: `http://localhost:5173`
-- Backend API will be available at: `http://localhost:8000`
-- Interactive API Swagger Docs: `http://localhost:8000/docs`
 
-### Future Improvements
-1. **Cloud Vector Stores**: Migrate from local ChromaDB to Pinecone or Qdrant for horizontal scalability.
-2. **PostgreSQL**: Switch the SQLite database to PostgreSQL using the provided SQLAlchemy configuration.
-3. **Advanced Parsing**: Use specialized NER models to better extract unstructured entities from complex PDF layouts.
+Backend API will run at `http://localhost:8000` (Swagger docs at `http://localhost:8000/docs`).
 
-## License
-MIT License
+### 2. Frontend Setup
+
+```bash
+cd frontend
+
+# Install packages
+npm install
+
+# Run development server
+npm run dev
+```
+
+Frontend will run at `http://localhost:5173`.
+
+### 3. Running End-to-End Tests
+
+```bash
+cd backend
+python tests/test_e2e.py
+```
+
+---
+
+## 🔒 Security & Best Practices
+
+- Secure passlib/bcrypt password hashing without legacy deprecations.
+- Timezone-aware UTC JWT expiration tokens.
+- Strict user-isolated vector collections (`user_{user_id}_resumes`) preventing data crosstalk.
+- Clean cascade deletion removing files from disk, SQL records, and ChromaDB vector collections.
+
+---
+
+## 📄 License
+
+MIT License.
