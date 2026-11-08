@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "@/services/api";
+import { isMockModeActive } from "@/services/mockBackend";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -567,10 +568,17 @@ export default function Dashboard() {
 
         {/* Right side status, model, & user profile */}
         <div className="flex items-center gap-3">
-          <div className="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded bg-zinc-900/80 border border-zinc-800 text-[11px] font-mono text-zinc-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-            <span>{systemInfo?.active_provider === "smart_local" ? "ChromaDB Ready" : `${systemInfo?.active_provider || "AI"} Ready`}</span>
-          </div>
+          {isMockModeActive() ? (
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-amber-500/10 border border-amber-500/20 text-[11px] font-mono text-amber-300">
+              <Sparkles className="w-3 h-3 text-amber-400" />
+              <span>Interactive Sandbox</span>
+            </div>
+          ) : (
+            <div className="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded bg-zinc-900/80 border border-zinc-800 text-[11px] font-mono text-zinc-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              <span>{systemInfo?.active_provider === "smart_local" ? "ChromaDB Ready" : `${systemInfo?.active_provider || "AI"} Ready`}</span>
+            </div>
+          )}
 
           <Button
             variant="ghost"
